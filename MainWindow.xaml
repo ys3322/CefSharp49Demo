@@ -8,8 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
     Title="{Binding Path=Title, ElementName=Browser}"
-    Width="800"
-    Height="450"
+    Width="432"
+    Height="833"
     FocusManager.FocusedElement="{Binding ElementName=Browser}"
     mc:Ignorable="d">
     <Grid>
@@ -50,7 +50,7 @@
                 BorderBrush="Gray"
                 BorderThickness="1"
                 FontSize="12"
-                Text="{Binding Address, ElementName=Browser, FallbackValue=http://192.168.1.10:4173/}" />
+                Text="{Binding Address, ElementName=Browser, FallbackValue=http://localhost:4173/}" />
 
             <!--  , UpdateSourceTrigger=PropertyChanged  -->
 
@@ -62,18 +62,27 @@
                 Command="{Binding WebBrowser.PrintCommand, ElementName=Browser}"
                 Content="Print" />
 
+            <!--
             <Button
                 Grid.Column="4"
                 Width="75"
                 Margin="4,0,0,0"
                 Command="{Binding WebBrowser.ViewSourceCommand, ElementName=Browser}"
                 Content="View source" />
+            -->
+
+            <Button
+                Grid.Column="4"
+                Width="75"
+                Margin="4,0,0,0"
+                Click="Button_Click"
+                Content="DevTool" />
         </Grid>
 
         <wpf:ChromiumWebBrowser
             x:Name="Browser"
             Grid.Row="1"
-            Address="http://192.168.1.10:4173/" />
+            Address="http://localhost:4173/" />
 
         <ProgressBar
             Grid.Row="1"

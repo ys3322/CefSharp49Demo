@@ -1,7 +1,11 @@
-﻿using System;
+﻿using CefSharp;
+using CefSharp.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,7 +25,41 @@ namespace CefSharp49Demo
     {
         public MainWindow()
         {
+
             InitializeComponent();
+            // 注册全局js对象
+            Browser.RegisterJsObject("csObject", new Test(Browser));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Browser.ShowDevTools();
+        }
+    }
+
+    public class Test
+    {
+        ChromiumWebBrowser Browser;
+        public Test() { }
+        public Test(ChromiumWebBrowser Browser) {
+            this.Browser = Browser;
+        }
+        // => js调用方式 csObject.print("{index:1}");
+        public string print(string inParams) {
+            //MessageBox.Show("C# Hello!");
+            Console.WriteLine("C# Hello!...");
+
+            // 执行业务 例如打印
+
+            Console.WriteLine("C# 打印处理中: ... ...");
+
+            Thread.Sleep(2000); //延时2s
+
+            // => 处理成功 调用js方法
+            Browser.GetBrowser().MainFrame.ExecuteJavaScriptAsync("window.alert('打印成功！')");
+
+            // 执行业务 例如打印
+            return $"C# 处理成功: 入参：{inParams}; 打印业务成功：耗时2S.";
         }
     }
 }
