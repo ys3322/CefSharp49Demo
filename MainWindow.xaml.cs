@@ -28,7 +28,12 @@ namespace CefSharp49Demo
 
             InitializeComponent();
             // 注册全局js对象
+
+            //csObject.print('11') // 同步执行
             Browser.RegisterJsObject("csObject", new Test(Browser));
+
+            //csAsyncObject.print('11').then(aa => console.log(aa)) // 异步执行 js调用后 结果通过promise包裹
+            Browser.RegisterAsyncJsObject("csAsyncObject", new Test(Browser));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
